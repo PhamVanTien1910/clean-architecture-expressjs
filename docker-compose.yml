@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: boileplate
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=mysql
+      - DB_NAME=boilerplate
+    depends_on:
+      - db 
+    networks:
+      - boileplate-network
+    entrypoint: ["sh", "-c", "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && npm start"]
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: boilerplate
+    ports:
+      - "3306:3306"
+    networks:
+      - boileplate-network
+  
+networks:
+  boileplate-network:
+    external: true
