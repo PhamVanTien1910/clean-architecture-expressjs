@@ -5,7 +5,7 @@ import errorMiddleware from "../src/infrastructure/middlewares/errorHandle.js";
 import initUserRouter from "./interfaces/router/user.js";
 import connection from "./infrastructure/config/connectDB.js";
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 import swaggerSetup from "./infrastructure/docs/swagger.js";
 
 app.use(express.urlencoded({extended: true}));
